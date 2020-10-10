@@ -24,6 +24,9 @@ Click here for the [Travel-Weather-Forecast] access https://marynapr.github.io/T
 This document was created by MarynaPR. Feel free to contact me with any questions via email pryadkamaryna@gmail.com.
 <!-- grading criteria to pseudocode -->
 
+Use the [OpenWeather API](https://openweathermap.org/api) to retrieve weather data for cities. The documentation includes a section called "How to start" that will provide basic setup and usage instructions. Use `localStorage` to store any persistent data.
+
+
 GIVEN a weather dashboard with form inputs
 WHEN I search for a city
 THEN I am presented with current and future conditions for that city and that city is added to the search history
