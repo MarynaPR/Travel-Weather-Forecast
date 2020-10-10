@@ -5,7 +5,7 @@ var searchTravelCity = function () {
     //event.preventDerault();
     console.log("city");
     var searchCity = document.querySelector("#searchCity").value;
-    storeTravelCity(searchCity);
+    //storeTravelCity(searchCity);
     // to make sure user writes a city
     if (searchCity) {
         storeTravelCity(searchCity);
@@ -37,8 +37,29 @@ var storeTravelCity = function (searchCity) {
     }
     storedCities.appendChild(listOfCities);
 };
-document.querySelector("#searchBtn").addEventListener("click", searchTravelCity);
-//3 .f for weather for today and conditions
 
+document.querySelector("#searchBtn").addEventListener("click", searchTravelCity);
+///3 .f for weather for today and conditions in the chosen city
+
+var weatherCall = function (searchCity) {
+    console.log("weather")
+    //fetch the weather with api keys
+    fetch(
+        "http://api.openweathermap.org/data/2.5/weather?q="
+        + searchCity
+        + "&appid=b76c30386bab576d023d70f50d7d35cb"
+    )
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data);
+            // })
+            // .catch.function()
+            // Use 'querySelector' to get the ID of where the GIF will be displayed
+            var responseContainer
+
+
+        }
 
 //4 f for forecast display
