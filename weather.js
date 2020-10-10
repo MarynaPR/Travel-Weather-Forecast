@@ -1,6 +1,4 @@
 // preudocode 
-//3 .f for weather for today and conditions
-//4 f for forecast display
 
 //1.fuction for get user inout for the city
 var searchTravelCity = function () {
@@ -40,3 +38,7 @@ var storeTravelCity = function (searchCity) {
     storedCities.appendChild(listOfCities);
 };
 document.querySelector("#searchBtn").addEventListener("click", searchTravelCity);
+//3 .f for weather for today and conditions
+
+
+//4 f for forecast display
