@@ -1,70 +1,89 @@
 // preudocode 
 
-var searchCity = document.querySelector("#searchcity");
-//1.fuction for get user inout for the city
+//1.fuction for get user input for the city
 var searchTravelCity = function (event) {
-    event.preventDerault();
-    console.log("city");
-    var city = searchCity.value.trim();
-    //storeTravelCity(searchCity);
+    event.preventDefault();
+    //console.log("city");
+    var city = document.querySelector("#searchcity").value;
     // to make sure user writes a city
     if (city) {
-        storeTravelCity(searchCity);
-        weatherCall(searchCity);
+        storeTravelCity(city);
+        weatherCall(city);
     } else {
         alert("Please select a city!");
     }
-    // var citySearchObj = {
-    //     name: searchCity,
-    // };
+    getForecast(city);
 }
-var displayCity = function () {
 
-}
 var list = []
 //2 function-create a list of cities and storing the input
 var storeTravelCity = function (city) {
-    console.log("storedCities");
+    console.log("storedTravelCity");
     localStorage.setItem("list", JSON.stringify(list));
     var listOfCities = document.createElement("li");
     listOfCities.classList.add("searchCity")//("list-group-city")//, "list-group-stored");
     //create list -div to hold city info and add to list them
     // var storedCities = document.createElement("div");
     // storedCities.innerHTML = "<h3><span class='searchCity'" + searchCity + "</span>";
-    var string = searchCity;
+    var string = city;
     listOfCities.textContent = string;
     var storedCities = document.querySelector(".storedTravelCity");
 
-    storedCities.onclick = function () {
-        console.log(event.this.city);
-        if (event.this.city == "li") {
+    document.storedCities.onclick = function () {
+        console.log(event.this);
+        if (event.this == "li") {
+            weatherCall(event.target.textContent);
         }
-        alert("hello")
+        //alert("hello")
     }
     storedCities.appendChild(listOfCities);
-    document.querySelector("#searchBtn").addEventListener("click", searchTravelCity)
+    document.querySelector("#searchBtn").addEventListener("click", searchTravelCity);
 };
 
 ///3 .f for weather for today and conditions in the chosen city
 
 var weatherCall = function (city) {
     console.log("weather")
-    //var searchCity = document.querySelector("#searchCity").value;
     //fetch the weather with api keys
     fetch(
         "http://api.openweathermap.org/data/2.5/weather?q="
-        + searchCity
+        + city
         + "&appid=b76c30386bab576d023d70f50d7d35cb&units=imperial"
     )
         .then(function (response) {
-            //console.log(response);
+            console.log(response);
             return response.json();
         })
         .then(function (response) {
-            console.log(response.data);
+            console.log(response);
+        })
 
+    // city name
+    // date, 
+    //icon representation of weather conditions, 
+    //current temperature, 
+    //current humidity, 
+    //windspeed,//
+    //uv index, 
+    //5 day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
+}
+//4 f for forecast display 5day
+var getForecast = function (city) {
+    console.log(city);
+    //fetch request
+    fetch(
+        "http://api.openweathermap.org/data/2.5/forecast?q="
+        + city
+        + "&appid=b76c30386bab576d023d70f50d7d35cb&units=imperial"
+    )
+        //convert the response to JSON
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (response) {
+            console.log(response);
         })
 }
-//4 f for forecast display
 
-document.querySelector("#searchBtn").addEventListener("submit", searchTravelCity);
+
+document.querySelector("#searchBtn").addEventListener("click", searchTravelCity);
