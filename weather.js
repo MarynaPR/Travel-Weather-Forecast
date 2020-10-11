@@ -1,5 +1,5 @@
 // preudocode 
-
+//GIVEN a weather dashboard with form inputs WHEN I search for a city THEN I am presented with current and future conditions for that city and that city is added to the search history
 //1.fuction for get user input for the city
 var searchTravelCity = function (event) {
     event.preventDefault();
@@ -13,10 +13,7 @@ var searchTravelCity = function (event) {
     } else {
         alert("Please select a city!");
     }
-
 }
-
-//var list = []
 //2 function-create a list of cities and storing the input
 var storeTravelCity = function (city) {
     console.log("storedTravelCity");
@@ -39,7 +36,7 @@ var storeTravelCity = function (city) {
     // getForecast(city);
     //document.querySelector("#searchBtn").addEventListener("click", searchTravelCity);
 };
-
+//WHEN I view current weather conditions for that city THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
 ///3 weather today and conditions in the chosen city
 var weatherCall = function (city) {
     console.log("weather")
@@ -49,7 +46,7 @@ var weatherCall = function (city) {
     var temp = document.querySelector(".temp");
     var hum = document.querySelector(".hum");
     var wind = document.querySelector(".wind");
-    var uv = document.querySelector(".uv");
+    //var uv = document.querySelector(".uv");
     var img = document.querySelector(".img");
     //fetch the weather with api keys
     fetch(
@@ -70,16 +67,17 @@ var weatherCall = function (city) {
             var tempValue = data["main"]["temp"];
             var humValue = data["main"]["humidity"];
             var windValue = data["wind"]["speed"];
-            var uvValue = data["coord"]["lon"]["lat"];
+            //var lonValue = data["coord"]["lon"];
+            // var latValue = data["coord"]["lat"];
             var imgValue = data["weather"][0]["icon"];
 
-            loc.innerHTML = locValue;
-            desc.innerHTML = descValue;
-            temp.innerHTML = tempValue;
-            hum.innerHTML = humValue;
-            wind.innerHTML = windValue;
-            uv.innerHTML = uvValue;
-            img.innerHTML = imgValue;
+            loc.innerHTML = 'Location: ' + locValue;
+            desc.innerHTML = 'Weather: ' + descValue;
+            temp.innerHTML = 'Temperature: ' + tempValue + 'F';
+            hum.innerHTML = 'Humidity: ' + humValue + '%';
+            wind.innerHTML = 'Wind Speed: ' + windValue + 'MHP';
+            //uv.innerHTML = uvValue;
+            img.innerHTML = img.setAttribute('src', 'http://openweathermap.org/img/wn/') + imgValue + '@2x.png';
         })
         .catch(function (error) {
             console.log(error);
@@ -87,6 +85,7 @@ var weatherCall = function (city) {
         })
     getForecast(city);
 }
+//WHEN I view future weather conditions for that city THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
 //4 f for forecast display 5day
 var getForecast = function (city) {
     console.log(city);
@@ -106,14 +105,14 @@ var getForecast = function (city) {
             var forecast = document.querySelector("#fivedaycontainer");
             forecastContainer = document.createElement("div");
             forecastContainer.className = "\'row\'";
-            forecast.innerHTML = "<h3 class=\"mt-3\">5-Day Forecast:</h3>";
+            forecast.innerHTML = "<h3 class=\"mr-12\">5-Day Forecast:</h3>";
 
             // for loop 
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i <= 5; i++) {
 
                 // var for weather conditions displayed in the bootstrap card
 
-                var date = document.createElement("h3");
+                var date = document.createElement("h6");
                 var body = document.createElement("div");
                 var cont = document.createElement("div");
                 var card = document.createElement("div");
@@ -132,14 +131,15 @@ var getForecast = function (city) {
                 temp.classList.add("card-text");
                 hum.classList.add("card-text");
                 uv.classList.add("card-text");
-                img.classList.add("card-tex");//image?
+                img.classList.add("card-text");//image?
 
                 //display
+                date.textContent = "Date: " + new Date(data.list[i].dt_txt);
                 wind.textContent = "Wind: " + data.list[i].wind.speed + "MPH";
                 temp.textContent = "Temperature: " + data.list[i].main.temp + "F";
                 hum.textContent = "Humidity: " + data.list[i].main.humidity + "%";
-                img.textContent = "Icon: " + data.list[i].weather.icon + "";
-                uv.textContent = "Coord: " + data.list[i].coord.lon;
+                img.setAttribute('src', 'http://openweathermap.org/img/wn/') + data.list[i].weather.icon + '@2x.png';
+                //uv.textContent = "Coord: " + data.list[i].coord.lon;
 
                 //connect by appending
                 cont.appendChild(card);
@@ -153,13 +153,6 @@ var getForecast = function (city) {
                 card.appendChild(body);
             }
         })
-    // city name
-    // date, 
-    //icon representation of weather conditions, 
-    //current temperature, 
-    //current humidity, 
-    //windspeed,//
-    //uv index, 
-    //5 day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
 }
+//WHEN I view the UV index THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
 document.querySelector("#searchBtn").addEventListener("click", searchTravelCity);
