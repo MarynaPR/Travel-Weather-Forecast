@@ -77,7 +77,7 @@ var weatherCall = function (city) {
             hum.innerHTML = 'Humidity: ' + humValue + '%';
             wind.innerHTML = 'Wind Speed: ' + windValue + 'MHP';
             //uv.innerHTML = uvValue;
-            img.innerHTML = img.setAttribute('src', 'http://openweathermap.org/img/wn/') + imgValue + '@2x.png';
+            img.setAttribute('src', 'http://openweathermap.org/img/wn/' + imgValue + '@2x.png');
         })
         .catch(function (error) {
             console.log(error);
@@ -138,7 +138,7 @@ var getForecast = function (city) {
                 wind.textContent = "Wind: " + data.list[i].wind.speed + "MPH";
                 temp.textContent = "Temperature: " + data.list[i].main.temp + "F";
                 hum.textContent = "Humidity: " + data.list[i].main.humidity + "%";
-                img.setAttribute('src', 'http://openweathermap.org/img/wn/') + data.list[i].weather.icon + '@2x.png';
+                img.setAttribute('src', 'http://openweathermap.org/img/wn/' + data.list[i].weather[0].icon + '@2x.png');
                 //uv.textContent = "Coord: " + data.list[i].coord.lon;
 
                 //connect by appending
