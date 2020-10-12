@@ -28,6 +28,7 @@ var storeTravelCity = function (city) {
         if (event.this == "li") {
             weatherCall(event.target.textContent);
             getForecast(event.target.textContent);
+            // getUv();
         }
     }
     storedCities.appendChild(listOfCities);
@@ -116,26 +117,14 @@ var weatherCall = function (city) {
                         }
                         else {
                             buttonUV.classList.add("btn-danger");
-                        }//  "btn btn-dark"
-
-                        //uvindex.append(uv);
+                        }//  "btn btn-dark"  //uvindex.append(uv);
                         uv.appendChild(buttonUV);
                     })
-
-                // getUv(data.coord.lon, data.coord.lat);
             }
-            // .catch(function (error) {
-            //     console.log(error);
-
-            // })
             getForecast(city);
             getUv(data.coord.lon, data.coord.lat);
-
-            //getUv(data.coord.lon, data.coord.lat);// getUv(data.value);
         })
 }
-
-
 //WHEN I view future weather conditions for that city THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
 var getForecast = function (city) {
     console.log(city);
@@ -157,16 +146,16 @@ var getForecast = function (city) {
             forecastContainer.className = "\'row\'";
             forecast.innerHTML = "<h3 class=\"mt-3\">5-Day Forecast:</h3>";
             //var today = moment();
-            // var date = new Date();
+
             // date.setDate(date.getDate() + 5);
             // var tomorrow = moment(today).add(1, "date");
 
             // for loop to display 5 days
             for (var i = 0; i <= 4; i++) {
-                if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
-                    //JavaScript String indexOf() Method
-                    // var for weather conditions displayed in the bootstrap card
-                    //for (var i = 0; i < forecast.length; i += 8) {
+                //if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+                //JavaScript String indexOf() Method
+                // var for weather conditions displayed in the bootstrap card
+                for (var i = 0; i < data.list.length; i += 8) {
                     var date = document.createElement("h6");
                     var body = document.createElement("div");
                     var cont = document.createElement("div");
@@ -187,7 +176,13 @@ var getForecast = function (city) {
 
                     //display
                     // date.textContent = "Date: " + data.list[i].dt_txt;
-                    date.textContent = new Date(data.list[i].dt_txt);
+                    var newDate = new Date(data.list[i].dt_txt.split(" ")[0]);
+                    console.log(JSON.stringify(newDate).slice(0, 11));
+
+                    date.textContent = JSON.stringify(newDate).slice(1, 11);//new Date(data.list[i].dt_txt.split(" ")[0]);
+                    console.log(data.list[i].dt_txt.split(" ")[0]);
+
+                    console.log(data.list, "data.list");
                     wind.textContent = "Wind: " + data.list[i].wind.speed + "MPH";
                     temp.textContent = "Temperature: " + data.list[i].main.temp + "F";
                     hum.textContent = "Humidity: " + data.list[i].main.humidity + "%";
@@ -202,6 +197,7 @@ var getForecast = function (city) {
                     body.appendChild(hum);
                     body.appendChild(img);
                     card.appendChild(body);
+                    // }
                 }
             }
         });
