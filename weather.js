@@ -1,6 +1,6 @@
 // preudocode 
+
 //GIVEN a weather dashboard with form inputs WHEN I search for a city THEN I am presented with current and future conditions for that city and that city is added to the search history
-//1.fuction for get user input for the city
 var searchTravelCity = function (event) {
     event.preventDefault();
     //console.log("city");
@@ -14,7 +14,7 @@ var searchTravelCity = function (event) {
         alert("Please select a city!");
     }
 }
-//2 function-create a list of cities and storing the input
+//function-create a list of cities and storing the input
 var storeTravelCity = function (city) {
     console.log("storedTravelCity");
     var list = [];
@@ -33,13 +33,12 @@ var storeTravelCity = function (city) {
         }
     }
     storedCities.appendChild(listOfCities);
-    // getForecast(city);
-    //document.querySelector("#searchBtn").addEventListener("click", searchTravelCity);
 };
 //WHEN I view current weather conditions for that city THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
 ///3 weather today and conditions in the chosen city
 var weatherCall = function (city) {
     console.log("weather")
+
     var city = document.querySelector("#searchcity").value;
     var loc = document.querySelector(".loc");
     var desc = document.querySelector(".desc");
@@ -48,6 +47,7 @@ var weatherCall = function (city) {
     var wind = document.querySelector(".wind");
     //var uv = document.querySelector(".uv");
     var img = document.querySelector(".img");
+
     //fetch the weather with api keys
     fetch(
         "http://api.openweathermap.org/data/2.5/weather?q="
@@ -61,7 +61,19 @@ var weatherCall = function (city) {
         .then(function (data) {
             console.log(data);
             // var button = document.querySelector(".searchBtn");
+            var today = moment().format('dddd, MMMM Do YYYY');
+            var display = document.getElementById("currentDay");
+            display.innerHTML = today;
+            console.log("time");
 
+            //interval that runs every min to refresh the time
+            setInterval(() => {
+                console.log("time update");
+                var today = moment().format('dddd, MMMM Do YYYY');
+            }, 10000);
+
+            //var todayIs = moment().format("MMM Do YY");
+            // console.log(todayIs);
             var locValue = data["name"];
             var descValue = data["weather"][0]["description"];
             var tempValue = data["main"]["temp"];
@@ -86,7 +98,6 @@ var weatherCall = function (city) {
     getForecast(city);
 }
 //WHEN I view future weather conditions for that city THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
-//4 f for forecast display 5day
 var getForecast = function (city) {
     console.log(city);
     //fetch request
@@ -105,7 +116,7 @@ var getForecast = function (city) {
             var forecast = document.querySelector("#fivedaycontainer");
             forecastContainer = document.createElement("div");
             forecastContainer.className = "\'row\'";
-            forecast.innerHTML = "<h3 class=\"mr-12\">5-Day Forecast:</h3>";
+            forecast.innerHTML = "<h3 class=\"mt-3\">5-Day Forecast:</h3>";
 
             // for loop 
             for (var i = 0; i <= 5; i++) {
@@ -131,7 +142,7 @@ var getForecast = function (city) {
                 temp.classList.add("card-text");
                 hum.classList.add("card-text");
                 uv.classList.add("card-text");
-                img.classList.add("card-text");//image?
+                img.classList.add("card-text");
 
                 //display
                 date.textContent = "Date: " + new Date(data.list[i].dt_txt);

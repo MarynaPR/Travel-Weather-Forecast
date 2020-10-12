@@ -9,7 +9,8 @@ This code creates a simple weather outlook for a traveler for multiple cities to
 
 * HTML5 and CSS powered by jQuery
 * JavaScript
-* The Moment.js library was used to work with date and time
+* The Moment.js library used to work with date and time
+* [OpenWeather API](https://openweathermap.org/api) used to retrieve weather data for cities
 
 ### Video Resources used for research:
 
