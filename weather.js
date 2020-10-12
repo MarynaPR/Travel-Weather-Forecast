@@ -45,7 +45,6 @@ var weatherCall = function (city) {
     var temp = document.querySelector(".temp");
     var hum = document.querySelector(".hum");
     var wind = document.querySelector(".wind");
-    //var uv = document.querySelector(".uv");
     var img = document.querySelector(".img");
 
     //fetch the weather with api keys
@@ -78,8 +77,6 @@ var weatherCall = function (city) {
             var tempValue = data["main"]["temp"];
             var humValue = data["main"]["humidity"];
             var windValue = data["wind"]["speed"];
-            //var lonValue = data["coord"]["lon"];
-            // var latValue = data["coord"]["lat"];
             var imgValue = data["weather"][0]["icon"];
 
             loc.innerHTML = 'Location: ' + locValue;
@@ -87,14 +84,14 @@ var weatherCall = function (city) {
             temp.innerHTML = 'Temperature: ' + tempValue + 'F';
             hum.innerHTML = 'Humidity: ' + humValue + '%';
             wind.innerHTML = 'Wind Speed: ' + windValue + 'MHP';
-            //uv.innerHTML = uvValue;
             img.setAttribute('src', 'http://openweathermap.org/img/wn/' + imgValue + '@2x.png');
         })
         .catch(function (error) {
             console.log(error);
-
         })
     getForecast(city);
+    getUv();//(data.coord.lon, data.coord.lat);
+
 }
 //WHEN I view future weather conditions for that city THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
 var getForecast = function (city) {
@@ -121,14 +118,13 @@ var getForecast = function (city) {
             // date.setDate(date.getDate() + 5);
             // var tomorrow = moment(today).add(1, "date");
 
-            // for loop 
-            for (var i = 0; i <= 5; i++) {
+            // for loop to display 5 days
+            for (var i = 0; i <= 4; i++) {
+                //if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
 
                 // var for weather conditions displayed in the bootstrap card
                 //for (var i = 0; i < forecast.length; i += 8) {
                 // console.log(date.list[i].dt_txt);
-
-
                 var date = document.createElement("h6");
                 var body = document.createElement("div");
                 var cont = document.createElement("div");
@@ -136,7 +132,6 @@ var getForecast = function (city) {
                 var wind = document.createElement("p");
                 var temp = document.createElement("p");
                 var hum = document.createElement("p");
-                var uv = document.createElement("p");
                 var img = document.createElement("img");
 
                 // add class
@@ -147,16 +142,15 @@ var getForecast = function (city) {
                 wind.classList.add("card-text");
                 temp.classList.add("card-text");
                 hum.classList.add("card-text");
-                uv.classList.add("card-text");
                 img.classList.add("card-text");
 
                 //display
-                date.textContent = new Date(data.list[i].dt_txt); //+ "Date: "  ;
+                // date.textContent = "Date: " + data.list[i].dt_txt;
+                date.textContent = new Date(data.list[i].dt_txt);
                 wind.textContent = "Wind: " + data.list[i].wind.speed + "MPH";
                 temp.textContent = "Temperature: " + data.list[i].main.temp + "F";
                 hum.textContent = "Humidity: " + data.list[i].main.humidity + "%";
                 img.setAttribute('src', 'http://openweathermap.org/img/wn/' + data.list[i].weather[0].icon + '@2x.png');
-                //uv.textContent = "Coord: " + data.list[i].coord.lon;
 
                 //connect by appending
                 cont.appendChild(card);
@@ -165,14 +159,33 @@ var getForecast = function (city) {
                 body.appendChild(wind);
                 body.appendChild(temp);
                 body.appendChild(hum);
-                body.appendChild(uv);
                 body.appendChild(img);
                 card.appendChild(body);
-                // }
+
             }
-        })
+
+        });
 }
 //WHEN I view the UV index THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
 
-//http://api.openweathermap.org/data/2.5/uvi?lat={lat}&lon={lon}&appid={API key}
+var getUv = function (lat, lon) {
+    //fetch request 
+    fetch("http://api.openweathermap.org/data/2.5/uvi?appid=b76c30386bab576d023d70f50d7d35cb&lat="
+        + lat
+        + "&lon"
+        + lon)
+        //convert the response to json
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data);
+            var
+            var lonValue = data["coord"]["lon"];
+            var latValue = data["coord"]["lat"];
+            location.innerHTML = "UV Index: " + lonValue + latValue;
+
+        })
+}
+//eventListener on click for city search
 document.querySelector("#searchBtn").addEventListener("click", searchTravelCity);
