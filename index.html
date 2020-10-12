@@ -7,29 +7,22 @@
     <!-- bootstrap CSS only -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <!-- JS and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-        crossorigin="anonymous"></script>
-    <!-- titles -->
+    <!-- title -->
     <title>Travel-Weather-Forecast</title>
 </head>
 <!-- body  -->
 
 <body>
-    <header class="container-flui bg-light text-dark text-center">
+    <header class="container-flui text-light bg-dark text-center">
         <h1>Weather Dashboard</h1>
     </header>
     <!-- div for main container -->
     <div class="container-fluid">
         <!-- div row with col for city list, forecast, daily weather in the city -->
         <div class="row">
-            <aside class="col-lg-3 bg-light">
+            <aside class="col-lg-6 bg-light">
                 <!-- search/city input -->
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <h3>Search for a City</h3>
                     <div class="form-inline form-group">
                         <input name="city-name" class="form-input" id="searchcity" type="text" />
@@ -39,24 +32,23 @@
                     <ul class="list-group storedTravelCity"></ul>
             </aside>
             <!-- div for weather/forecast display -->
-            <div class="col-lg-9"></div>
+            <div class="card-body"></div>
             <!-- weather in the selected city displayed-->
-            <div id="weathercall" class="row mt-3">
+            <div id="weathercall" class="row">
                 <ul>
                     <p class="loc"></p>
                     <p id=currentDay></p>
+                    <img class="img"></img>
                     <p class="desc"></p>
                     <p class="temp"></p>
                     <p class="hum"></p>
                     <p class="wind"></p>
-                    <!-- <p class="lon"></p>
-                    <p class="lat"></p>-->
                     <p class="uv" id="uvindex"></p>
-                    <img class="img"></img>
+
                 </ul>
             </div>
             <!-- 5 day forecast -->
-            <div id="fivedaycontainer" class="row mt-3"></div>
+            <div id="fivedaycontainer" class="row"></div>
         </div>
     </div>
     </div>

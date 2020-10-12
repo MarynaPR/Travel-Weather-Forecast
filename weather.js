@@ -18,7 +18,7 @@ var storeTravelCity = function (city) {
     var list = [];
     localStorage.setItem("list", JSON.stringify(list));
     var listOfCities = document.createElement("li");
-    listOfCities.classList.add("searchCity")
+    listOfCities.classList.add("searchCity");
     var string = city;
     listOfCities.textContent = string;
     var storedCities = document.querySelector(".storedTravelCity");
@@ -28,12 +28,12 @@ var storeTravelCity = function (city) {
         if (event.this == "li") {
             weatherCall(event.target.textContent);
             getForecast(event.target.textContent);
-            // getUv();
         }
     }
     storedCities.appendChild(listOfCities);
 };
 //WHEN I view current weather conditions for that city THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
+
 //3 weather today and conditions in the chosen city
 var weatherCall = function (city) {
     console.log("weather")
@@ -69,20 +69,21 @@ var weatherCall = function (city) {
             }, 10000);
 
             // console.log(todayIs);
+            var imgValue = data["weather"][0]["icon"];
             var locValue = data["name"];
             var descValue = data["weather"][0]["description"];
             var tempValue = data["main"]["temp"];
             var humValue = data["main"]["humidity"];
             var windValue = data["wind"]["speed"];
-            var imgValue = data["weather"][0]["icon"];
 
+
+            img.setAttribute('src', 'http://openweathermap.org/img/wn/' + imgValue + '@2x.png');
             loc.innerHTML = 'Location: ' + locValue;
             desc.innerHTML = 'Weather: ' + descValue;
             temp.innerHTML = 'Temperature: ' + tempValue + 'F';
             hum.innerHTML = 'Humidity: ' + humValue + '%';
             wind.innerHTML = 'Wind Speed: ' + windValue + 'MHP';
-            img.setAttribute('src', 'http://openweathermap.org/img/wn/' + imgValue + '@2x.png');
-
+            //WHEN I view the UV index THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
             var getUv = function (lat, lon) {
                 //fetch request 
                 fetch(
@@ -93,9 +94,6 @@ var weatherCall = function (city) {
                     })
                     .then(function (data) {
                         //console.log(data);
-                        //var body = document.querySelector(".card-body");
-                        // uv.innerHTML = "UV Index: "// + lonValue + latValue;
-                        //var uv = document.createElement("p");
                         uv.innerHTML = "UV Index: " //+ data.list[i].coord.lon;
                         var buttonUV = document.createElement("span");
                         buttonUV.classList.add("btn");
@@ -140,54 +138,42 @@ var getForecast = function (city) {
         })
         .then(function (data) {
             console.log(data);
-
             var forecast = document.querySelector("#fivedaycontainer");
             forecastContainer = document.createElement("div");
             forecastContainer.className = "\'row\'";
-            forecast.innerHTML = "<h3 class=\"mt-3\">5-Day Forecast:</h3>";
-            //var today = moment();
-
-            // date.setDate(date.getDate() + 5);
-            // var tomorrow = moment(today).add(1, "date");
-
+            forecast.innerHTML = "<h3 class=\"mt-6\">5-Day Forecast:</h3>";
             // for loop to display 5 days
             for (var i = 0; i <= 4; i++) {
-                //if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
-                //JavaScript String indexOf() Method
-                // var for weather conditions displayed in the bootstrap card
+                //since time update is every 3 hours, for 5 days=> 40 array
                 for (var i = 0; i < data.list.length; i += 8) {
                     var date = document.createElement("h6");
+                    var img = document.createElement("img");
                     var body = document.createElement("div");
                     var cont = document.createElement("div");
                     var card = document.createElement("div");
                     var wind = document.createElement("p");
                     var temp = document.createElement("p");
                     var hum = document.createElement("p");
-                    var img = document.createElement("img");
                     // add class
                     date.classList.add("card-text");
+                    img.classList.add("card-text");
                     body.classList.add("card-body", "p-2");
                     cont.classList.add("col-md-2");
                     card.classList.add("card,text-white");
                     wind.classList.add("card-text");
                     temp.classList.add("card-text");
                     hum.classList.add("card-text");
-                    img.classList.add("card-text");
-
                     //display
                     // date.textContent = "Date: " + data.list[i].dt_txt;
                     var newDate = new Date(data.list[i].dt_txt.split(" ")[0]);
-                    console.log(JSON.stringify(newDate).slice(0, 11));
-
+                    //console.log(JSON.stringify(newDate).slice(0, 11));
                     date.textContent = JSON.stringify(newDate).slice(1, 11);//new Date(data.list[i].dt_txt.split(" ")[0]);
-                    console.log(data.list[i].dt_txt.split(" ")[0]);
-
+                    //console.log(data.list[i].dt_txt.split(" ")[0]);
                     console.log(data.list, "data.list");
+                    img.setAttribute('src', 'http://openweathermap.org/img/wn/' + data.list[i].weather[0].icon + '@2x.png');
                     wind.textContent = "Wind: " + data.list[i].wind.speed + "MPH";
                     temp.textContent = "Temperature: " + data.list[i].main.temp + "F";
                     hum.textContent = "Humidity: " + data.list[i].main.humidity + "%";
-                    img.setAttribute('src', 'http://openweathermap.org/img/wn/' + data.list[i].weather[0].icon + '@2x.png');
-
                     //connect by appending
                     cont.appendChild(card);
                     forecast.appendChild(cont);
@@ -201,19 +187,6 @@ var getForecast = function (city) {
                 }
             }
         });
-
-    // getUv(data.coord.lon, data.coord.lat);
 }
-//WHEN I view the UV index THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
-
-
 //eventListener on click for city search
 document.querySelector("#searchBtn").addEventListener("click", searchTravelCity);
-
-           // var lonValue = data["coord"]["lon"];
-            // var latValue = data["coord"]["lat"];
-            // var lonValue = data["coord"]["lon"];
-            // var latValue = data["coord"]["lat"];
-            // var body = document.createElement("div");
-            // body.classList.add("card-body", "p-2");
-            // uv.innerHTML = lonValue + latValue;
