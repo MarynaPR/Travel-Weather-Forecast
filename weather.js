@@ -85,12 +85,13 @@ var weatherCall = function (city) {
             hum.innerHTML = 'Humidity: ' + humValue + '%';
             wind.innerHTML = 'Wind Speed: ' + windValue + 'MHP';
             img.setAttribute('src', 'http://openweathermap.org/img/wn/' + imgValue + '@2x.png');
+            getUv(data.coord.lon, data.coord.lat);
         })
         .catch(function (error) {
             console.log(error);
         })
     getForecast(city);
-    getUv();//(data.coord.lon, data.coord.lat);
+
 
 }
 //WHEN I view future weather conditions for that city THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
@@ -170,21 +171,50 @@ var getForecast = function (city) {
 
 var getUv = function (lat, lon) {
     //fetch request 
-    fetch("http://api.openweathermap.org/data/2.5/uvi?appid=b76c30386bab576d023d70f50d7d35cb&lat="
-        + lat
-        + "&lon"
-        + lon)
+    fetch(
+        "http://api.openweathermap.org/data/2.5/uvi?appid=b76c30386bab576d023d70f50d7d35cb&lat=" + lat + "&lon=" + lon)
+
         //convert the response to json
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
-            var
-            var lonValue = data["coord"]["lon"];
-            var latValue = data["coord"]["lat"];
-            location.innerHTML = "UV Index: " + lonValue + latValue;
+            //console.log(data);
+            var body = document.querySelector(".card-body");
+            // uv.innerHTML = "UV Index: "// + lonValue + latValue;
+            var uv = document.createElement("p");
+            uv.textContent = "UV Index: " //+ data.list[i].coord.lon;
+            var button = document.createElement("span");
+            button.classList.add("btn");
+            button.innerHTML = data.value;
 
+            // WHEN I view the UV index THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
+            //    {
+            //     "lat": 38.75,
+            //     "lon": 40.25,
+            //     "date_iso": "2017-06-23T12:00:00Z",
+            //     "date": 1498219200,
+            //     "value": 10.16
+            //   }
+            //bootstrap buttons
+            if (data.value < 2) {//favorable
+                button.classList.add("btn-success");
+            }
+            else if (data.value < 7) {
+                button.classList.add("btn-warning");
+            }
+            else {
+                button.classList.add("btn-danger");
+            }//  "btn btn-dark"
+            // var lonValue = data["coord"]["lon"];
+            // var latValue = data["coord"]["lat"];
+            // var lonValue = data["coord"]["lon"];
+            // var latValue = data["coord"]["lat"];
+            // var body = document.createElement("div");
+            // body.classList.add("card-body", "p-2");
+            // uv.innerHTML = lonValue + latValue;
+            body.appendChild(uv);
+            uv.appendChild(button);
         })
 }
 //eventListener on click for city search
