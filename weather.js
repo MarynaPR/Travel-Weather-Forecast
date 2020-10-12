@@ -1,5 +1,3 @@
-// preudocode 
-
 //GIVEN a weather dashboard with form inputs WHEN I search for a city THEN I am presented with current and future conditions for that city and that city is added to the search history
 var searchTravelCity = function (event) {
     event.preventDefault();
@@ -30,6 +28,7 @@ var storeTravelCity = function (city) {
         if (event.this == "li") {
             weatherCall(event.target.textContent);
             getForecast(event.target.textContent);
+
         }
     }
     storedCities.appendChild(listOfCities);
@@ -70,7 +69,6 @@ var weatherCall = function (city) {
                 var today = moment().format('dddd, MMMM Do YYYY');
             }, 10000);
 
-            //var todayIs = moment().format("MMM Do YY");
             // console.log(todayIs);
             var locValue = data["name"];
             var descValue = data["weather"][0]["description"];
@@ -85,15 +83,17 @@ var weatherCall = function (city) {
             hum.innerHTML = 'Humidity: ' + humValue + '%';
             wind.innerHTML = 'Wind Speed: ' + windValue + 'MHP';
             img.setAttribute('src', 'http://openweathermap.org/img/wn/' + imgValue + '@2x.png');
-            getUv(data.coord.lon, data.coord.lat);
+
+
         })
         .catch(function (error) {
             console.log(error);
+
         })
     getForecast(city);
-
-
+    getUv(data.coord.lon, data.coord.lat);
 }
+
 //WHEN I view future weather conditions for that city THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
 var getForecast = function (city) {
     console.log(city);
@@ -121,54 +121,52 @@ var getForecast = function (city) {
 
             // for loop to display 5 days
             for (var i = 0; i <= 4; i++) {
-                //if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+                if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+                    //JavaScript String indexOf() Method
+                    // var for weather conditions displayed in the bootstrap card
+                    //for (var i = 0; i < forecast.length; i += 8) {
+                    var date = document.createElement("h6");
+                    var body = document.createElement("div");
+                    var cont = document.createElement("div");
+                    var card = document.createElement("div");
+                    var wind = document.createElement("p");
+                    var temp = document.createElement("p");
+                    var hum = document.createElement("p");
+                    var img = document.createElement("img");
+                    // add class
+                    date.classList.add("card-text");
+                    body.classList.add("card-body", "p-2");
+                    cont.classList.add("col-md-2");
+                    card.classList.add("card,text-white");
+                    wind.classList.add("card-text");
+                    temp.classList.add("card-text");
+                    hum.classList.add("card-text");
+                    img.classList.add("card-text");
 
-                // var for weather conditions displayed in the bootstrap card
-                //for (var i = 0; i < forecast.length; i += 8) {
-                // console.log(date.list[i].dt_txt);
-                var date = document.createElement("h6");
-                var body = document.createElement("div");
-                var cont = document.createElement("div");
-                var card = document.createElement("div");
-                var wind = document.createElement("p");
-                var temp = document.createElement("p");
-                var hum = document.createElement("p");
-                var img = document.createElement("img");
+                    //display
+                    // date.textContent = "Date: " + data.list[i].dt_txt;
+                    date.textContent = new Date(data.list[i].dt_txt);
+                    wind.textContent = "Wind: " + data.list[i].wind.speed + "MPH";
+                    temp.textContent = "Temperature: " + data.list[i].main.temp + "F";
+                    hum.textContent = "Humidity: " + data.list[i].main.humidity + "%";
+                    img.setAttribute('src', 'http://openweathermap.org/img/wn/' + data.list[i].weather[0].icon + '@2x.png');
 
-                // add class
-                date.classList.add("card-text");
-                body.classList.add("card-body", "p-2");
-                cont.classList.add("col-md-2");
-                card.classList.add("card,text-white");
-                wind.classList.add("card-text");
-                temp.classList.add("card-text");
-                hum.classList.add("card-text");
-                img.classList.add("card-text");
-
-                //display
-                // date.textContent = "Date: " + data.list[i].dt_txt;
-                date.textContent = new Date(data.list[i].dt_txt);
-                wind.textContent = "Wind: " + data.list[i].wind.speed + "MPH";
-                temp.textContent = "Temperature: " + data.list[i].main.temp + "F";
-                hum.textContent = "Humidity: " + data.list[i].main.humidity + "%";
-                img.setAttribute('src', 'http://openweathermap.org/img/wn/' + data.list[i].weather[0].icon + '@2x.png');
-
-                //connect by appending
-                cont.appendChild(card);
-                forecast.appendChild(cont);
-                body.appendChild(date);
-                body.appendChild(wind);
-                body.appendChild(temp);
-                body.appendChild(hum);
-                body.appendChild(img);
-                card.appendChild(body);
-
+                    //connect by appending
+                    cont.appendChild(card);
+                    forecast.appendChild(cont);
+                    body.appendChild(date);
+                    body.appendChild(wind);
+                    body.appendChild(temp);
+                    body.appendChild(hum);
+                    body.appendChild(img);
+                    card.appendChild(body);
+                }
             }
-
         });
+
+    // getUv(data.coord.lon, data.coord.lat);
 }
 //WHEN I view the UV index THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
-
 var getUv = function (lat, lon) {
     //fetch request 
     fetch(
@@ -196,7 +194,7 @@ var getUv = function (lat, lon) {
             //     "date": 1498219200,
             //     "value": 10.16
             //   }
-            //bootstrap buttons
+            //JavaScript if else and else if+ bootstrap buttons
             if (data.value < 2) {//favorable
                 button.classList.add("btn-success");
             }
