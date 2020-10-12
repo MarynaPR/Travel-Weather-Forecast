@@ -20,7 +20,8 @@ This code creates a simple weather outlook for a traveler for multiple cities to
 
 ### Web Access
 
-Click here for the [Travel-Weather-Forecast] access https://marynapr.github.io/Travel-Weather-Forecast/
+Click here for the [Travel-Weather-Forecast] access 
+https://marynapr.github.io/Travel-Weather-Forecast/
 
 This document was created by MarynaPR. Feel free to contact me with any questions via email pryadkamaryna@gmail.com.
 <!-- grading criteria to pseudocode -->

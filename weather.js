@@ -60,12 +60,11 @@ var weatherCall = function (city) {
         })
         .then(function (data) {
             console.log(data);
-            // var button = document.querySelector(".searchBtn");
+            //to display current day
             var today = moment().format('dddd, MMMM Do YYYY');
             var display = document.getElementById("currentDay");
             display.innerHTML = today;
             console.log("time");
-
             //interval that runs every min to refresh the time
             setInterval(() => {
                 console.log("time update");
@@ -117,11 +116,18 @@ var getForecast = function (city) {
             forecastContainer = document.createElement("div");
             forecastContainer.className = "\'row\'";
             forecast.innerHTML = "<h3 class=\"mt-3\">5-Day Forecast:</h3>";
+            //var today = moment();
+            // var date = new Date();
+            // date.setDate(date.getDate() + 5);
+            // var tomorrow = moment(today).add(1, "date");
 
             // for loop 
             for (var i = 0; i <= 5; i++) {
 
                 // var for weather conditions displayed in the bootstrap card
+                //for (var i = 0; i < forecast.length; i += 8) {
+                // console.log(date.list[i].dt_txt);
+
 
                 var date = document.createElement("h6");
                 var body = document.createElement("div");
@@ -145,7 +151,7 @@ var getForecast = function (city) {
                 img.classList.add("card-text");
 
                 //display
-                date.textContent = "Date: " + new Date(data.list[i].dt_txt);
+                date.textContent = new Date(data.list[i].dt_txt); //+ "Date: "  ;
                 wind.textContent = "Wind: " + data.list[i].wind.speed + "MPH";
                 temp.textContent = "Temperature: " + data.list[i].main.temp + "F";
                 hum.textContent = "Humidity: " + data.list[i].main.humidity + "%";
@@ -162,8 +168,11 @@ var getForecast = function (city) {
                 body.appendChild(uv);
                 body.appendChild(img);
                 card.appendChild(body);
+                // }
             }
         })
 }
 //WHEN I view the UV index THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
+
+//http://api.openweathermap.org/data/2.5/uvi?lat={lat}&lon={lon}&appid={API key}
 document.querySelector("#searchBtn").addEventListener("click", searchTravelCity);
