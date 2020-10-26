@@ -20,21 +20,21 @@
     <div class="container-fluid">
         <!-- div row with col for city list, forecast, daily weather in the city -->
         <div class="row">
-            <aside class="col-lg-6 bg-light">
+            <aside class="col-lg-3 bg-light">
                 <!-- search/city input -->
-                <div class="col-md-6">
-                    <h3>Search for a City</h3>
-                    <div class="form-inline form-group">
-                        <input name="city-name" class="form-input" id="searchcity" type="text" />
-                        <button class="btn btn-success" id="searchBtn">Search</button>
-                    </div>
-                    <!-- div for cities that user searched for -->
-                    <ul class="list-group storedTravelCity"></ul>
+                <!-- <div class="col-md-6"> -->
+                <h3 class="mt-1">Search for a City</h3>
+                <div class="form-inline form-group">
+                    <input name="city-name" class="form-input" id="searchcity" type="text" />
+                    <button class="btn btn-success" id="searchBtn">Search</button>
+                </div>
+                <!-- div for cities that user searched for -->
+                <ul class="list-group storedTravelCity"></ul>
             </aside>
             <!-- div for weather/forecast display -->
-            <div class="card-body"></div>
+            <div class="col-lg-9"></div>
             <!-- weather in the selected city displayed-->
-            <div id="weathercall" class="row">
+            <div id="weathercall" class="mt-3">
                 <ul>
                     <p class="loc"></p>
                     <p id=currentDay></p>
@@ -44,11 +44,10 @@
                     <p class="hum"></p>
                     <p class="wind"></p>
                     <p class="uv" id="uvindex"></p>
-
                 </ul>
             </div>
             <!-- 5 day forecast -->
-            <div id="fivedaycontainer" class="row"></div>
+            <div id="fivedaycontainer" class="row mt-6"></div>
         </div>
     </div>
     </div>

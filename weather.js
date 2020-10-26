@@ -15,22 +15,24 @@ var searchTravelCity = function (event) {
 //function-create a list of cities and storing the input
 var storeTravelCity = function (city) {
     console.log("storedTravelCity");
-    var list = [];
-    localStorage.setItem("list", JSON.stringify(list));
+    //var list = [];
+    //localStorage.setItem("list", JSON.stringify(list));
     var listOfCities = document.createElement("li");
-    listOfCities.classList.add("searchCity");
+    listOfCities.classList.add("list-group-item", "list-group-item-action");
     var string = city;
     listOfCities.textContent = string;
     var storedCities = document.querySelector(".storedTravelCity");
+    console.log(event.target);
+
     //list the cities onclick function
     storedCities.onclick = function () {
-        console.log(event.this);
-        if (event.this == "li") {
-            weatherCall(event.target.textContent);
-            getForecast(event.target.textContent);
+        console.log(event.target.tagName)
+        if (event.target.tagName === "li") {
+            weatherCall(event.target.textContent)
+            //getForecast(event.target.textContent);
         }
     }
-    storedCities.appendChild(listOfCities);
+    storedCities.append(listOfCities);
 };
 //WHEN I view current weather conditions for that city THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
 
@@ -45,6 +47,7 @@ var weatherCall = function (city) {
     var wind = document.querySelector(".wind");
     var img = document.querySelector(".img");
     var uv = document.querySelector("#uvindex");
+
     //fetch the weather with api keys
     fetch(
         "http://api.openweathermap.org/data/2.5/weather?q="
@@ -57,6 +60,7 @@ var weatherCall = function (city) {
         })
         .then(function (data) {
             console.log(data);
+
             //to display current day
             var today = moment().format('dddd, MMMM Do YYYY');
             var display = document.getElementById("currentDay");
@@ -99,13 +103,6 @@ var weatherCall = function (city) {
                         buttonUV.classList.add("btn");
                         buttonUV.innerHTML = data.value;
                         // WHEN I view the UV index THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
-                        //    {
-                        //     "lat": 38.75,
-                        //     "lon": 40.25,
-                        //     "date_iso": "2017-06-23T12:00:00Z",
-                        //     "date": 1498219200,
-                        //     "value": 10.16
-                        //   }
                         //JavaScript if else and else if+ bootstrap buttons
                         if (data.value < 2) {//favorable
                             buttonUV.classList.add("btn-success");
@@ -159,7 +156,7 @@ var getForecast = function (city) {
                     img.classList.add("card-text");
                     body.classList.add("card-body", "p-2");
                     cont.classList.add("col-md-2");
-                    card.classList.add("card,text-white");
+                    card.classList.add("card,bg-primary");
                     wind.classList.add("card-text");
                     temp.classList.add("card-text");
                     hum.classList.add("card-text");
@@ -183,7 +180,7 @@ var getForecast = function (city) {
                     body.appendChild(hum);
                     body.appendChild(img);
                     card.appendChild(body);
-                    // }
+
                 }
             }
         });
