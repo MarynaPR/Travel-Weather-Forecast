@@ -5,8 +5,9 @@ var searchTravelCity = function (event) {
     var city = document.querySelector("#searchcity").value;
     // to make sure user writes a city
     if (city) {
-        storeTravelCity(city);
+
         weatherCall(city);
+        storeTravelCity(city);
         // getForecast(city);
     } else {
         alert("Please select a city!");
@@ -19,8 +20,8 @@ var storeTravelCity = function (city) {
     //localStorage.setItem("list", JSON.stringify(list));
     var listOfCities = document.createElement("li");
     listOfCities.classList.add("list-group-item", "list-group-item-action");
-    var string = city;
-    listOfCities.textContent = string;
+    var text = city;
+    listOfCities.textContent = text;
     var storedCities = document.querySelector(".storedTravelCity");
     console.log(event.target);
 
@@ -29,14 +30,12 @@ var storeTravelCity = function (city) {
         console.log(event.target.tagName)
         if (event.target.tagName === "li") {
             weatherCall(event.target.textContent)
-            //getForecast(event.target.textContent);
+            getForecast(event.target.textContent);
         }
     }
     storedCities.append(listOfCities);
 };
 //WHEN I view current weather conditions for that city THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-
-//3 weather today and conditions in the chosen city
 var weatherCall = function (city) {
     console.log("weather")
     var city = document.querySelector("#searchcity").value;
@@ -60,6 +59,7 @@ var weatherCall = function (city) {
         })
         .then(function (data) {
             console.log(data);
+
 
             //to display current day
             var today = moment().format('dddd, MMMM Do YYYY');
@@ -136,14 +136,14 @@ var getForecast = function (city) {
         .then(function (data) {
             console.log(data);
             var forecast = document.querySelector("#fivedaycontainer");
-            forecastContainer = document.createElement("div");
-            forecastContainer.className = "\'row\'";
-            forecast.innerHTML = "<h3 class=\"mt-6\">5-Day Forecast:</h3>";
+            // forecastContainer = document.createElement("div");
+            // forecastContainer.className = "\'line\'";
+            forecast.innerHTML = "<h5 class=\"mt-6\">5-Day Forecast:</h5>";
             // for loop to display 5 days
             for (var i = 0; i <= 4; i++) {
                 //since time update is every 3 hours, for 5 days=> 40 array
                 for (var i = 0; i < data.list.length; i += 8) {
-                    var date = document.createElement("h6");
+                    var date = document.createElement("h4");
                     var img = document.createElement("img");
                     var body = document.createElement("div");
                     var cont = document.createElement("div");
@@ -154,13 +154,12 @@ var getForecast = function (city) {
                     // add class
                     date.classList.add("card-text");
                     img.classList.add("card-text");
-                    body.classList.add("card-body", "p-2");
+                    body.classList.add("card-body", "p-1");
                     cont.classList.add("col-md-2");
-                    card.classList.add("card,bg-primary");
+                    card.classList.add("card");
                     wind.classList.add("card-text");
                     temp.classList.add("card-text");
                     hum.classList.add("card-text");
-                    //display
                     // date.textContent = "Date: " + data.list[i].dt_txt;
                     var newDate = new Date(data.list[i].dt_txt.split(" ")[0]);
                     //console.log(JSON.stringify(newDate).slice(0, 11));
@@ -180,6 +179,7 @@ var getForecast = function (city) {
                     body.appendChild(hum);
                     body.appendChild(img);
                     card.appendChild(body);
+
 
                 }
             }

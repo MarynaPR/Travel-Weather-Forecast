@@ -3,7 +3,8 @@
 This code creates a simple weather outlook for a traveler for multiple cities to prepare for a trip accordingly.
 
 ### Screenshots
-[screenshot1]
+![screenshot1][./images/screenshot.png]
+
 
 ### Technology
 
