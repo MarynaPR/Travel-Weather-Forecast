@@ -17,7 +17,7 @@ This code creates a simple weather outlook for a traveler for multiple cities to
 
 * https://youtu.be/S-gMLzlG_ME
 * https://youtu.be/4UoUqnjUC2c
-* https://www.epa.gov/sunsafety calculating-uv-index-0 
+* https://www.epa.gov/sunsafetycalculating-uv-index-0 
 
 ### Web Access
 
