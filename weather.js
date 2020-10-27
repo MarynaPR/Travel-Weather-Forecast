@@ -49,7 +49,7 @@ var weatherCall = function (city) {
 
     //fetch the weather with api keys
     fetch(
-        "http://api.openweathermap.org/data/2.5/weather?q="
+        "https://api.openweathermap.org/data/2.5/weather?q="
         + city
         + "&appid=b76c30386bab576d023d70f50d7d35cb&units=imperial"
     )
@@ -81,7 +81,7 @@ var weatherCall = function (city) {
             var windValue = data["wind"]["speed"];
 
 
-            img.setAttribute('src', 'http://openweathermap.org/img/wn/' + imgValue + '@2x.png');
+            img.setAttribute('src', 'https://openweathermap.org/img/wn/' + imgValue + '@2x.png');
             loc.innerHTML = 'Location: ' + locValue;
             desc.innerHTML = 'Weather: ' + descValue;
             temp.innerHTML = 'Temperature: ' + tempValue + 'F';
@@ -91,7 +91,7 @@ var weatherCall = function (city) {
             var getUv = function (lat, lon) {
                 //fetch request 
                 fetch(
-                    "http://api.openweathermap.org/data/2.5/uvi?appid=b76c30386bab576d023d70f50d7d35cb&lat=" + lat + "&lon=" + lon)
+                    "https://api.openweathermap.org/data/2.5/uvi?appid=b76c30386bab576d023d70f50d7d35cb&lat=" + lat + "&lon=" + lon)
                     //convert the response to json
                     .then(function (response) {
                         return response.json();
@@ -125,7 +125,7 @@ var getForecast = function (city) {
     console.log(city);
     //fetch request
     fetch(
-        "http://api.openweathermap.org/data/2.5/forecast?q="
+        "https://api.openweathermap.org/data/2.5/forecast?q="
         + city
         + "&appid=b76c30386bab576d023d70f50d7d35cb&units=imperial"
     )
@@ -166,7 +166,7 @@ var getForecast = function (city) {
                     date.textContent = JSON.stringify(newDate).slice(1, 11);//new Date(data.list[i].dt_txt.split(" ")[0]);
                     //console.log(data.list[i].dt_txt.split(" ")[0]);
                     console.log(data.list, "data.list");
-                    img.setAttribute('src', 'http://openweathermap.org/img/wn/' + data.list[i].weather[0].icon + '@2x.png');
+                    img.setAttribute('src', 'https://openweathermap.org/img/wn/' + data.list[i].weather[0].icon + '@2x.png');
                     wind.textContent = "Wind: " + data.list[i].wind.speed + "MPH";
                     temp.textContent = "Temperature: " + data.list[i].main.temp + "F";
                     hum.textContent = "Humidity: " + data.list[i].main.humidity + "%";
